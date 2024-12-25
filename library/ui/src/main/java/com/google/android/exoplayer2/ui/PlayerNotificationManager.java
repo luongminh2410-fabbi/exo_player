@@ -1164,9 +1164,9 @@ public class PlayerNotificationManager {
     notificationManager.notify(notificationId, notification);
     if (!isNotificationStarted) {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        context.registerReceiver(receiver, filter);
+        context.registerReceiver(notificationBroadcastReceiver, intentFilter);
       } else {
-        context.registerReceiver(receiver, filter, Context.RECEIVER_NOT_EXPORTED);
+        context.registerReceiver(notificationBroadcastReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
       }
     }
     if (notificationListener != null) {
