@@ -1163,11 +1163,12 @@ public class PlayerNotificationManager {
     Notification notification = builder.build();
     notificationManager.notify(notificationId, notification);
     if (!isNotificationStarted) {
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         context.registerReceiver(notificationBroadcastReceiver, intentFilter);
-      } else {
-        context.registerReceiver(notificationBroadcastReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
-      }
+//      if (Build.VERSION.SDK_INT >= 33) {
+//        context.registerReceiver(notificationBroadcastReceiver, intentFilter);
+//      } else {
+//        context.registerReceiver(notificationBroadcastReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
+//      }
     }
     if (notificationListener != null) {
       // Always pass true for ongoing with the first notification to tell a service to go into
