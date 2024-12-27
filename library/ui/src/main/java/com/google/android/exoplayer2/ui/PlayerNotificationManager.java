@@ -1163,11 +1163,10 @@ public class PlayerNotificationManager {
     Notification notification = builder.build();
     notificationManager.notify(notificationId, notification);
     if (!isNotificationStarted) {
-//      Util.registerReceiverNotExported(context, notificationBroadcastReceiver, intentFilter);
       if (Build.VERSION.SDK_INT < 33) {
         context.registerReceiver(notificationBroadcastReceiver, intentFilter);
       } else {
-        context.registerReceiver(notificationBroadcastReceiver, intentFilter, Context.RECEIVER_VISIBLE_TO_INSTANT_APPS);
+        context.registerReceiver(notificationBroadcastReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
       }
     }
     if (notificationListener != null) {
