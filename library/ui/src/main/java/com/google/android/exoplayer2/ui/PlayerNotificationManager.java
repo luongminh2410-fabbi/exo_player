@@ -45,7 +45,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v4.media.session.MediaSessionCompat;
-import android.util.Log;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IntDef;
 import androidx.annotation.IntRange;
@@ -1164,17 +1163,12 @@ public class PlayerNotificationManager {
     Notification notification = builder.build();
     notificationManager.notify(notificationId, notification);
     if (!isNotificationStarted) {
-      try {
-        if (Build.VERSION.SDK_INT < 33) {
-          context.registerReceiver(notificationBroadcastReceiver, intentFilter);
-        } else {
-          context.registerReceiver(notificationBroadcastReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
-        }
-      }
-      catch (Exception e) {
-        e.printStackTrace();
-        Log.e("BroadcastReceiverError", "Error registering receiver: " + e.getMessage());
-      }
+//      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//        context.registerReceiver(notificationBroadcastReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
+//      } else {
+//        context.registerReceiver(notificationBroadcastReceiver, intentFilter);
+//      }
+      context.registerReceiver(notificationBroadcastReceiver, intentFilter);
     }
     if (notificationListener != null) {
       // Always pass true for ongoing with the first notification to tell a service to go into
