@@ -45,6 +45,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v4.media.session.MediaSessionCompat;
+import android.util.Log;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IntDef;
 import androidx.annotation.IntRange;
@@ -1163,10 +1164,16 @@ public class PlayerNotificationManager {
     Notification notification = builder.build();
     notificationManager.notify(notificationId, notification);
     if (!isNotificationStarted) {
-      if (Build.VERSION.SDK_INT < 33) {
-        context.registerReceiver(notificationBroadcastReceiver, intentFilter);
-      } else {
-        context.registerReceiver(notificationBroadcastReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
+      try {
+        if (Build.VERSION.SDK_INT < 33) {
+          context.registerReceiver(notificationBroadcastReceiver, intentFilter);
+        } else {
+          context.registerReceiver(notificationBroadcastReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
+        }
+      }
+      catch (Exception e) {
+        e.printStackTrace();
+        Log.e("BroadcastReceiverError", "Error registering receiver: " + e.getMessage());
       }
     }
     if (notificationListener != null) {
