@@ -678,7 +678,7 @@ public class PlayerNotificationManager {
   private final NotificationManagerCompat notificationManager;
   private final IntentFilter intentFilter;
   private final Player.Listener playerListener;
-  private final BroadcastReceiver notificationBroadcastReceiver;
+  private final NotificationBroadcastReceiver notificationBroadcastReceiver;
   private final Map<String, NotificationCompat.Action> playbackActions;
   private final Map<String, NotificationCompat.Action> customActions;
   private final PendingIntent dismissPendingIntent;
@@ -1163,12 +1163,12 @@ public class PlayerNotificationManager {
     Notification notification = builder.build();
     notificationManager.notify(notificationId, notification);
     if (!isNotificationStarted) {
-//      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//        context.registerReceiver(notificationBroadcastReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
-//      } else {
-//        context.registerReceiver(notificationBroadcastReceiver, intentFilter);
-//      }
-      context.registerReceiver(notificationBroadcastReceiver, intentFilter);
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        context.registerReceiver(notificationBroadcastReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
+      } else {
+        context.registerReceiver(notificationBroadcastReceiver, intentFilter);
+      }
+//      context.registerReceiver(notificationBroadcastReceiver, intentFilter);
     }
     if (notificationListener != null) {
       // Always pass true for ongoing with the first notification to tell a service to go into
